@@ -13,6 +13,18 @@ vim.opt.tabstop = 4 	-- Number of visual spaces per tab
 vim.opt.shiftwidth = 4	-- Number of spaces to use for each level of indentation
 vim.opt.expandtab = true	-- Convert tab to spaces
 
+
+-- Set tab size to 2 spaces for JavaScript and CSS
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "javascript", "javascriptreact", "typescript", "typescriptreact", "css", "scss", "html" },
+    callback = function()
+        vim.opt_local.tabstop = 2
+        vim.opt_local.shiftwidth = 2
+        vim.opt_local.softtabstop = 2
+        vim.opt_local.expandtab = true
+    end
+})
+
 -- Set scroll navigation
 vim.opt.scrolloff = 10
 vim.opt.sidescrolloff = 10
@@ -38,11 +50,14 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Disable highlight when hitting escape
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+-- Set up colors
+vim.opt.termguicolors = true
+
 -- Move focus between windows
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+-- vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+-- vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+-- vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+-- vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- Set up lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
