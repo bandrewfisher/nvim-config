@@ -19,7 +19,8 @@ return {
             ensure_installed = {
                 "lua_ls",
                 -- "black",
-                "pyright"
+                "pyright",
+                "rust_analyzer"
             }
         })
 
