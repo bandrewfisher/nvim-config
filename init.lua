@@ -25,6 +25,9 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 })
 
+-- <leader>r to reload file
+vim.keymap.set("n", "<leader>r", ":e!<CR>", { noremap = true, silent = true })
+
 -- Set scroll navigation
 vim.opt.scrolloff = 10
 vim.opt.sidescrolloff = 10
