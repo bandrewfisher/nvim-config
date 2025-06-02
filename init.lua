@@ -25,6 +25,13 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 })
 
+-- Highlight yanked text
+vim.api.nvim_create_autocmd("TextYankPost", {
+    callback = function()
+        vim.highlight.on_yank()
+    end,
+})
+
 -- <leader>r to reload file
 vim.keymap.set("n", "<leader>r", ":e!<CR>", { noremap = true, silent = true })
 
