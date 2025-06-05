@@ -50,8 +50,29 @@ return {
         opts.desc = "See available code actions"
         keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
 
-        opts.desc = "Smart rename"
-        keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
+        -- opts.desc = "Smart rename"
+        -- keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
+        vim.keymap.set("n", "<leader>rn", function()
+          local curr_name = vim.fn.expand("<cword>")
+          vim.ui.input({ prompt = "New Name: ", default = curr_name }, function(new_name)
+            if not new_name or #new_name == 0 or new_name == curr_name then return end
+
+            vim.lsp.buf.rename(new_name)
+
+            -- Delay to let LSP apply edits
+            vim.defer_fn(function()
+              local visited = {}
+              for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+                local name = vim.api.nvim_buf_get_name(buf)
+                if name ~= "" and vim.api.nvim_buf_get_option(buf, "modified") and not visited[name] then
+                  visited[name] = true
+                  vim.cmd("tabnew " .. vim.fn.fnameescape(name))
+                end
+              end
+            end, 100)
+          end)
+        end, { desc = "Smart rename and open modified files in tabs" })
+
 
         opts.desc = "Show buffer diagnostics"
         keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
