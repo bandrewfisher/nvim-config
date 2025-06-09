@@ -9,7 +9,12 @@ return {
         require("nvim-tree").setup({
             view = {
                 side = "right",
-            }
+            },
+            update_focused_file = {
+                enable = true,
+                update_root = true,
+            },
+            sync_root_with_cwd = true,
         })
 
         -- Open tree view
