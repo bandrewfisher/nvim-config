@@ -21,12 +21,6 @@ return {
     vim.api.nvim_create_autocmd("LspAttach", {
       group = vim.api.nvim_create_augroup("UserLspConfig", {}),
       callback = function(ev)
-        -- Show notification when LSP attaches
-        local client = vim.lsp.get_client_by_id(ev.data.client_id)
-        if client then
-          vim.notify("LSP attached: " .. client.name, vim.log.levels.INFO)
-        end
-
         -- Buffer local mappings.
         -- See `:help vim.lsp.*` for documentation on any of the below functions
         local opts = { buffer = ev.buf, silent = true }
@@ -94,4 +88,4 @@ return {
       end,
     })
   end,
-} 
+}
